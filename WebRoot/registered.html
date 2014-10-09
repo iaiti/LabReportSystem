@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>注册</title>
+<style type="text/css">
+.textfield {
+	height: 20px;
+	width: 200px;
+}
+body div {
+	height: 400px;
+	width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 40px;
+}
+body div h1 {
+	font-size: 25px;
+}
+body table {
+	background-color: #FFF;
+	margin: 70px;
+}
+.button {
+	height: 40px;
+	width: 80px;
+}
+body {
+	background-color: #ECE6F0;
+}
+</style>
+</head>
+
+<body>
+<div>
+<h1>Web实验报告系统--用户注册 </h1>
+<table width="446" border="1" align="center" cellspacing="0">
+  <tr>
+    <td width="180" height="40" align="center">用户名</td>
+    <td width="257" align="center"><form id="form1" name="form1" method="post" action="">
+      <label for="textfield"></label>
+      <input name="textfield" type="text" class="textfield" id="textfield" maxlength="13" />
+    </form></td>
+  </tr>
+  <tr>
+    <td height="60" align="center">身份</td>
+    <td align="center"><form id="form2" name="form2" method="post" action="">
+      <p>
+        <label>
+          <input type="radio" name="RadioGroup1" value="学生" id="RadioGroup1_0" />
+          学生</label><br />
+        <label>
+          <input type="radio" name="RadioGroup1" value="教师" id="RadioGroup1_1" />
+          教师</label>
+        <br />
+      </p>
+    </form></td>
+  </tr>
+  <tr>
+    <td height="40" align="center">密码</td>
+    <td align="center"><form id="form3" name="form3" method="post" action="">
+      <label for="textfield2"></label>
+      <input name="textfield2" type="password" class="textfield" id="textfield2" maxlength="13" />
+    </form></td>
+  </tr>
+  <tr>
+    <td height="40" align="center">确认密码</td>
+    <td align="center"><form id="form4" name="form4" method="post" action="">
+      <label for="textfield3"></label>
+      <input name="textfield3" type="password" class="textfield" id="textfield3" maxlength="13" />
+    </form></td>
+  </tr>
+  <tr>
+    <td height="60" align="center"><form id="form5" name="form5" method="post" action="">
+      <input name="button" type="submit" class="button" id="button" value="提交" />
+    </form></td>
+    <td align="center"><form id="form6" name="form6" method="post" action="">
+      <input name="button2" type="submit" class="button" id="button2" value="重写" />
+    </form></td>
+  </tr>
+</table>
+</div>
+</body>
+</html>

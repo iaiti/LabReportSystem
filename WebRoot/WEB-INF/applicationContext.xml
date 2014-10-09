@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/project</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>sql</value>
+		</property>
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/web/bean/Student.hbm.xml</value>
+				<value>com/web/bean/Teacher.hbm.xml</value>
+				<value>com/web/bean/Manager.hbm.xml</value>
+				<value>com/web/bean/Homework.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="studentDAO" class="com.web.DAO.impl.StudentDAOImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="teacherDAO" class="com.web.DAO.impl.TeacherDAOImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="managerDAO" class="com.web.DAO.impl.ManagerDAOImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="homeworkDAO" class="com.web.DAO.impl.HomeworkDAOImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+	<bean id="userDAO" class="com.web.DAO.impl.UserDAOImpl" scope="singleton">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory"></ref>
+		</property>
+	</bean>
+
+	<bean id="loginService" class="com.web.service.impl.LoginServiceImpl"
+		scope="singleton">
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+
+	<bean id="registerService" class="com.web.service.impl.RegisterServiceImpl"
+		scope="singleton">
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+	
+	
+	<bean id="homeworkService" class="com.web.service.impl.HomeworkServiceImpl"
+		scope="singleton">
+		<property name="homeworkDAO" ref="homeworkDAO"></property>
+	</bean>
+
+	<bean id="managerService" class="com.web.service.impl.ManagerServiceImpl" 
+		scope="singleton">
+		<property name="teacherDAO" ref="teacherDAO"></property>
+		<property name="studentDAO" ref="studentDAO"></property>
+		<property name="managerDAO" ref="managerDAO"></property>
+	</bean>
+
+	<bean id="userAction" class="com.web.action.UserAction" scope="prototype">
+		<property name="managerService" ref="managerService"></property>
+	</bean>
+	
+	<bean id="loginAction" class="com.web.action.LoginAction" scope="prototype">
+		<property name="loginService" ref="loginService"></property>
+	</bean>
+
+	<bean id="registerAction" class="com.web.action.RegisterAction" scope="prototype">
+		<property name="registerService" ref="registerService"></property>
+	</bean>
+	<bean id="homeworkAction" class="com.web.action.HomeworkAction" scope="prototype">
+		<property name="homeworkService" ref="homeworkService"></property>
+		<property name="managerService" ref="managerService"></property>
+	</bean>
+</beans>

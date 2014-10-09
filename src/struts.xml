@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+
+	<package name="web" extends="struts-default">
+		<!-- <interceptors>
+			<interceptor name="StudentInterceptor" class="com.web.util.StudentInterceptor"></interceptor>
+			<interceptor name="ManagerInterceptor" class="com.web.util.ManagerInterceptor"></interceptor>
+			<interceptor name="TeacherInterceptor" class="com.web.util.TeacherInterceptor"></interceptor>
+			 <interceptor-stack name="permission">
+                <interceptor-ref name="StudentInterceptor" />
+                <interceptor-ref name="TeacherInterceptor" />
+                <interceptor-ref name="ManagerInterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+		</interceptors> -->
+		
+        
+		<action name="login" class="com.web.action.LoginAction">
+			<result name="student_login">/student/student_loginSuccees.jsp</result>
+			<result name="teacher_login">/teacher/teacher_loginSuccees.jsp</result>
+			<result name="manager_login">/manager/manager_loginSuccees.jsp</result>
+			<result name="error">/fail.jsp</result>
+		</action>
+
+		<action name="register" class="com.web.action.RegisterAction">
+			<result name="student_register">/student/student_loginSuccees.jsp</result>
+			<result name="teacher_register">/teacher/teacher_loginSuccees.jsp</result>
+			<result name="error">/fail.jsp</result>
+		</action>
+	
+		<action name="manageradduser" class="com.web.action.RegisterAction">
+			<result name="student_register">/manager/manager_addusersuccess.jsp</result>
+			<result name="teacher_register">/manager/manager_addusersuccess.jsp</result>
+			<result name="error">/fail.jsp</result>
+		</action>
+		<!-- 主页面跳转 -->
+		<action name="index">
+			<result>/login.jsp</result>
+		</action>
+
+		<action name="*_*" class="com.web.action.UserAction" method="{1}_{2}">
+			<result name="student_homeWork">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_markList">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_read">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_sessionremove">/{1}/{1}_{2}.jsp</result>
+			<result name="student_sessionremove">/{1}/{1}_{2}.jsp</result>
+			<result name="manager_sessionremove">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_sendEmail">/{1}/{1}_{2}.jsp</result>
+			<result name="student_updatepassword">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_updatepassword">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_changepassword">/{1}/{1}_{2}.jsp</result>
+			<result name="student_changepassword">/{1}/{1}_{2}.jsp</result>
+			<result name="manager_updatepassword">/{1}/{1}_{2}.jsp</result>
+			<result name="manager_changepassword">/{1}/{1}_{2}.jsp</result>
+			<result name="error">/fail.jsp</result>
+			<result name="welcome">/index.jsp</result>
+			<!-- <interceptor-ref name="permission" /> -->
+		</action>
+	</package>
+
+<!-- 后台管理员 即拦截 -->
+	<package name="manager" namespace="/manager" extends="struts-default">
+		<interceptors>
+			<interceptor name="ManagerInterceptor" class="com.web.util.ManagerInterceptor"></interceptor>
+			 <interceptor-stack name="permission">
+                <interceptor-ref name="ManagerInterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+		</interceptors>
+		<action name="*_*" class="com.web.action.ManagerAction" method="{1}_{2}">
+			<result name="teacher_list">/{1}/{1}_{2}.jsp</result>
+			<result name="student_list">/{1}/{1}_{2}.jsp</result>
+			<result name="student_delete">/{1}/{1}_{2}.jsp</result>
+			<result name="teacher_delete">/{1}/{1}_{2}.jsp</result>
+			<result name="error">/fail.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+	</package>
+	
+	
+	<package name="teacherhomework" namespace="/homework" extends="struts-default">
+		<interceptors>
+			<interceptor name="TeacherInterceptor" class="com.web.util.TeacherInterceptor"></interceptor>
+			 <interceptor-stack name="permission">
+                <interceptor-ref name="TeacherInterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+		</interceptors>
+		
+		<action name="homework_publish" class="com.web.action.HomeworkAction"
+			method="homework_publish">
+			<result name="homework_publish">/teacher/teacher_finish.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		
+		<action name="teacher_publish" class="com.web.action.HomeworkAction"
+			method="teacher_publish">
+			<result name="teacher_publish">/teacher/teacher_publish.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		
+		<action name="teacherhomework_update" class="com.web.action.HomeworkAction"
+			method="teacher_updatehomework">
+			<result name="teacher_updatehomework">/teacher/teacherhomework_update.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="teacherhomework_prepareupdate" class="com.web.action.HomeworkAction"
+			method="teacher_prepareupdatehomework">
+			<result name="teacher_prepareupdatehomework">/teacher/teacherhomework_prepareupdate.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="teacherhomework_list" class="com.web.action.HomeworkAction"
+			method="homework_list">
+			<result name="homework_list">/teacher/teacherhomework_list.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="teacherhomework_marklist" class="com.web.action.HomeworkAction"
+			method="homework_list">
+			<result name="homework_list">/teacher/teacherhomework_marklist.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="teacherhomework_delete" class="com.web.action.HomeworkAction"
+			method="teacherhomework_delete">
+			<result name="teacherhomework_delete">/teacher/teacherhomework_delete.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+
+		<action name="teacherhomework_detail" class="com.web.action.HomeworkAction"
+			method="teacherhomework_detail">
+			<result name="teacherhomework_detail">/teacher/teacherhomework_detail.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="teacherhomework_studentmarklist" class="com.web.action.HomeworkAction"
+			method="teacherhomework_studentmarklist">
+			<result name="teacherhomework_studentmarklist">/teacher/teacherhomework_studentmarklist.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+
+		<action name="teacherhomework_donecontent" class="com.web.action.HomeworkAction"
+			method="teacherhomework_donecontent">
+			<result name="teacherhomework_donecontent">/teacher/teacherhomework_donecontent.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+
+		<action name="teacherhomework_marksave" class="com.web.action.HomeworkAction"
+			method="teacherhomework_marksave">
+			<result name="teacherhomework_marksave">/teacher/teacherhomework_marksave.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+
+		<action name="teacherhomework_donelist" class="com.web.action.HomeworkAction"
+			method="teacherhomework_donelist">
+			<result name="teacherhomework_donelist">/teacher/teacherhomework_donelist.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+	</package>
+
+	<package name="studenthomework" namespace="/homework" extends="struts-default">
+		<interceptors>
+			<interceptor name="StudentInterceptor" class="com.web.util.StudentInterceptor"></interceptor>
+			 <interceptor-stack name="permission">
+                <interceptor-ref name="StudentInterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+		</interceptors>
+		<action name="studenthomework_list" class="com.web.action.HomeworkAction"
+			method="studenthomework_list">
+			<result name="studenthomework_list">/student/student_allhomework.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="student_dohomework" class="com.web.action.HomeworkAction"
+			method="student_dohomework">
+			<result name="student_dohomework">/student/student_homework.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="student_finishhomework" class="com.web.action.HomeworkAction"
+			method="student_finishhomework">
+			<result name="student_finishhomework">/student/student_finishhomework.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+		<action name="student_marklist" class="com.web.action.HomeworkAction"
+			method="student_marklist">
+			<result name="student_marklist">/student/student_marklist.jsp</result>
+			<result name="welcome">../index.jsp</result>
+			<interceptor-ref name="permission" />
+		</action>
+	</package>
+</struts>    
